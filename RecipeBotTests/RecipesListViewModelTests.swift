@@ -9,9 +9,9 @@ import XCTest
 
 @testable import RecipeBot
 
-final class RecipesListViewModelTests: XCTestCase {
-
-    @MainActor func testRecipeCount(){
+@MainActor final class RecipesListViewModelTests: XCTestCase {
+    
+    func testRecipeCount(){
         
         let testData = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
                         Recipes(cuisine: "American", name: "Burgerr", imageUrl: "", uuid: ""),
@@ -34,7 +34,7 @@ final class RecipesListViewModelTests: XCTestCase {
         
     }
     
-    @MainActor func testSortingLogic() {
+    func testSortingLogic() {
         // Arrange
         let mockData = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
                         Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
@@ -76,8 +76,7 @@ final class RecipesListViewModelTests: XCTestCase {
         //   XCTAssertEqual(sortedArray, wrongOrder, "Recipes are not sorted in alphabetical order.")
         
     }
-    
-    @MainActor func testFilteringLogic() {
+    func testFilteringLogic() {
         // Arrange
         let mockRecipes = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
                            Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
