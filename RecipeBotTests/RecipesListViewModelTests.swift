@@ -7,29 +7,106 @@
 
 import XCTest
 
+@testable import RecipeBot
+
 final class RecipesListViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    @MainActor func testRecipeCount(){
+        
+        let testData = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "American", name: "Burgerr", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Indian", name: "Rasmalai", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Chinese", name: "Crab Rangoon", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: "")]
+        
+        
+        let recipeslistViewModel = RecipesListViewModel()
+        
+        recipeslistViewModel.recipes = testData
+        
+        
+        XCTAssertEqual(recipeslistViewModel.recipes.count, 6, "Both counts are equal")
+        
+        //Checking whether the test case fails in case of wrong result than expected.
+        
+        //    XCTAssertEqual(recipeslistViewModel.recipes.count, 4, "Both counts are not equal")
+        
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    @MainActor func testSortingLogic() {
+        // Arrange
+        let mockData = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Indian", name: "Rasmalai", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Chinese", name: "Crab Rangoon", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+                        Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: "")]
+        
+        
+        // Act
+        let viewModel = RecipesListViewModel()
+        
+        viewModel.recipes = mockData
+        
+        // Define the expected order based on the sorting logic
+        let expectedOrder: [Recipes] = [
+            Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
+            Recipes(cuisine: "Chinese", name: "Crab Rangoon", imageUrl: "", uuid: ""),
+            Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: ""),
+            Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
+            Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+            Recipes(cuisine: "Indian", name: "Rasmalai", imageUrl: "", uuid: "")]
+        
+        let wrongOrder = [Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: ""),
+                          Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
+                          Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+                          Recipes(cuisine: "Indian", name: "Rasmalai", imageUrl: "", uuid: ""),
+                          Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
+                          Recipes(cuisine: "Chinese", name: "Crab Rangoon", imageUrl: "", uuid: "")]
+        
+        let sortedArray =  viewModel.recipes.sorted(by: {$0.name<$1.name})
+        
+        // Assert that the recipes are sorted correctly
+        XCTAssertEqual(sortedArray, expectedOrder, "Recipes are sorted in alphabetical order.")
+        
+        
+        //Checking whether the test case fails in case of wrong result than expected.
+        
+        //   XCTAssertEqual(sortedArray, wrongOrder, "Recipes are not sorted in alphabetical order.")
+        
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    @MainActor func testFilteringLogic() {
+        // Arrange
+        let mockRecipes = [Recipes(cuisine: "Italian", name: "Pizza", imageUrl: "", uuid: ""),
+                           Recipes(cuisine: "American", name: "Burger", imageUrl: "", uuid: ""),
+                           Recipes(cuisine: "Indian", name: "Rasmalai", imageUrl: "", uuid: ""),
+                           Recipes(cuisine: "Chinese", name: "Crab Rangoon", imageUrl: "", uuid: ""),
+                           Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+                           Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: "")]
+        
+        
+        // Act
+        let viewModel = RecipesListViewModel()
+        
+        viewModel.recipes = mockRecipes
+        
+        
+        
+        let variable = "Cake"
+        let filteredRecipes = viewModel.recipes.filter( { $0.name.contains(variable)})
+        
+        // Define the expected order based on the filtering logic
+        
+        let expectedResult = [Recipes(cuisine: "British", name: "Plum Cake", imageUrl: "", uuid: ""),
+                              Recipes(cuisine: "Indian", name: "Milk Cake", imageUrl: "", uuid: "")]
+        
+        
+        // Assert that the recipes are sorted correctly
+        XCTAssertEqual(filteredRecipes, expectedResult, "Recipes filtered correctly.")
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    
+    
 }
+
