@@ -20,7 +20,7 @@ final class NetworkManager {
     
     func getRecipes() async throws -> [Recipes] {
         
-        guard let url = URL(string: malformedURL) else {
+        guard let url = URL(string: recipesURL) else {
             throw RPError.invalidURL
         }
         let (data,response) = try await URLSession.shared.data(from: url)
