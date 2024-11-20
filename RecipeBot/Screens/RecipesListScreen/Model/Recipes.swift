@@ -13,6 +13,9 @@ struct Recipes:Decodable,Hashable {
     var name: String
     var imageUrl : String
     var uuid : String
+    var imgUrl : URL? {
+        URL(string:imageUrl)
+    }
     
     
     enum CodingKeys: String, CodingKey {

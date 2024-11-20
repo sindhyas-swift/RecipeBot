@@ -13,7 +13,13 @@ struct RecipesListCell: View {
     let recipe : Recipes
     var body: some View {
         HStack{
-            RecipeRemoteImage(urlString: recipe.imageUrl)
+            AsyncCachedImage(url: recipe.imgUrl) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } placeholder: {
+                        ProgressView()
+                    }
                 .clipShape(.rect(cornerRadius: 10))
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 120, height: 95)
