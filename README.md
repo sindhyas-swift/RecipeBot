@@ -12,7 +12,7 @@ Now select a location to save the project.
 Select a simulator and Build/Run the app by clicking the run button in Xcode. 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas? 
 
-From a developer’s point of view, as this app has very minimum functionalities, I focused mainly on the User interface and Performance optimization. I have designed the UI by keeping in mind an app that is simple and visually appealing. Performance of the app was taken into consideration for a faster loading using swift concurrency (Async/Await). To reduce the network usage and to have an optimum storage utilization, Images were stored in cache. MVVM architecture is used to make the code clean, testable and maintainable. 
+From a developer’s point of view, as this app has very minimum functionalities, I focused mainly on the User interface and Performance optimization. I have designed the UI by keeping in mind an app that is simple and visually appealing. Performance of the app was taken into consideration for a faster loading using swift concurrency (Async/Await,AsyncImage). To reduce the network usage and to have an optimum storage utilization, Images are stored in cache. MVVM architecture is used to make the code clean, testable and maintainable. 
 
  
 ### Time Spent: Approximately how long did you spend working on this project? How did you allocate your time? 
